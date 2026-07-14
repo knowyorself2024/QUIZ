@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Self-Discovery Quiz</title>
+<meta name="description" content="A private self-exploration quiz. For fun and self-discovery only." />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main class="app">
+
+  <!-- ============ WELCOME SCREEN ============ -->
+  <section id="welcome" class="screen active">
+    <div class="card">
+      <h1>Self-Discovery Quiz</h1>
+      <p class="tag">A private, playful test of your preferences.</p>
+      <p class="lead">
+        Answer honestly — one question at a time. You can move forward or back
+        at any point. At the end, you'll see your personal profile.
+      </p>
+      <ul class="meta">
+        <li><strong id="totalCount">0</strong> questions</li>
+        <li>~5 minutes</li>
+        <li>Anonymous</li>
+      </ul>
+      <p class="disclaimer">For adults only. For fun and self-exploration. Stay safe and consensual.</p>
+      <button id="startBtn" class="btn primary">Start the quiz</button>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ SCREEN ============ -->
+  <section id="quiz" class="screen">
+    <div class="card">
+      <div class="progress"><div id="bar" class="bar"></div></div>
+      <div class="progress-text">
+        Question <span id="qNum">1</span> of <span id="qTotal">0</span>
+      </div>
+
+      <h2 id="qText" class="question">…</h2>
+
+      <div id="options" class="options">
+        <!-- Options are injected by JS. The four choices are fixed for every
+             question, so you only need to edit the questions list below. -->
+      </div>
+
+      <div class="nav">
+        <button id="prevBtn" class="btn ghost">← Previous</button>
+        <button id="nextBtn" class="btn primary">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULT SCREEN ============ -->
+  <section id="result" class="screen">
+    <div class="card">
+      <div id="resultLoading">
+        <div class="spinner"></div>
+        <p>Analyzing your answers…</p>
+      </div>
+      <div id="resultContent" style="display:none;">
+        <p class="eyebrow">Your Profile</p>
+        <h1 id="resultTitle">—</h1>
+        <p id="resultDesc" class="lead">—</p>
+        <div class="score-box">
+          <div><span class="score-num" id="scoreAvg">0</span><span class="score-lbl">Intensity</span></div>
+          <div><span class="score-num" id="scoreAnswered">0</span><span class="score-lbl">Answered</span></div>
+        </div>
+        <h3>Your top categories</h3>
+        <ul id="topCategories" class="cats"></ul>
+        <button id="restartBtn" class="btn primary">Take it again</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- =====================================================================
+     QUESTIONS
+     Edit, add, or remove <li> items below. That is the only change needed
+     to update the quiz. The four answer options are the same for every
+     question and are defined in script.js (SCALE constant).
+     ===================================================================== -->
+<ol id="questions" hidden>
+      <li>Being tied up or physically restrained by your partner during sex — how appealing is that to you?</li>
+      <li>Being the one who ties up or restrains your partner during sex — how appealing is that to you?</li>
+      <li>Using tools like handcuffs, ropes, or bondage tape to restrain during play — how appealing is that?</li>
+      <li>Being fully suspended off the ground with ropes or a harness during sex — how appealing?</li>
+      <li>Breath play — light choking or controlling your partner&#x27;s breathing during sex — how appealing?</li>
+      <li>Impact play — spanking, paddling, or flogging on the body — how appealing is that to you?</li>
+      <li>Being caned or whipped hard enough to leave visible marks on the skin — how appealing?</li>
+      <li>Wax play — dripping hot candle wax onto bare skin for sensation — how appealing?</li>
+      <li>Ice play — alternating hot and cold sensations (ice, warm objects) on the body — how appealing?</li>
+      <li>Needle play — using sterile needles or temporary piercings for sensation — how appealing?</li>
+      <li>Electrical play — light electric stimulation with a TENS unit or violet wand — how appealing?</li>
+      <li>Sensory deprivation — wearing a blindfold and earplugs so you can&#x27;t see or hear — how appealing?</li>
+      <li>A full 24/7 Dominant/submissive relationship where power roles apply outside the bedroom too — how appealing?</li>
+      <li>Playing the Dominant/Top role — being in charge and directing the scene — how appealing?</li>
+      <li>Playing the submissive/Bottom role — giving up control and following your partner&#x27;s lead — how appealing?</li>
+      <li>Being a Switch — enjoying both Dominant and submissive roles at different times — how appealing?</li>
+      <li>Wearing a collar (and being led on a leash) as a symbol of belonging to a partner — how appealing?</li>
+      <li>Verbal humiliation or degradation — being called names or insulted during play — how appealing?</li>
+      <li>Being humiliated or exposed in a semi-public setting, with the thrill of being seen — how appealing?</li>
+      <li>Orgasm control — being denied or brought to the edge repeatedly without release (edging) — how appealing?</li>
+      <li>Forced orgasms — being made to climax again and again past the point of comfort — how appealing?</li>
+      <li>Wearing a chastity device that prevents you (or your partner) from having orgasms for extended periods — how appealing?</li>
+      <li>Cuckolding or hotwifing — watching (or knowing) your partner has sex with someone else — how appealing?</li>
+      <li>Financial domination — a submissive giving money or gifts to a dominant partner as part of the dynamic — how appealing?</li>
+      <li>Pet play — acting or being treated as a kitten, puppy, pony, or other animal — how appealing?</li>
+      <li>Primal play — raw, animalistic sex with growling, biting, chasing, and wrestling — how appealing?</li>
+      <li>Consensual non-consent (CNC) — pre-negotiated &#x27;forced sex&#x27; or rape-fantasy roleplay — how appealing?</li>
+      <li>Age play — one partner playing a younger role (like DDLG) with a caregiver dynamic — how appealing?</li>
+      <li>Medical play — roleplay involving speculums, enemas, exams, or a doctor/patient scenario — how appealing?</li>
+      <li>Extreme bondage with very limited ability to move or escape — how appealing?</li>
+      <li>Shibari — decorative Japanese-style rope bondage tied around the body — how appealing?</li>
+      <li>Mummification — being fully wrapped from head to toe in plastic, tape, or bandages — how appealing?</li>
+      <li>Blackmail-style fantasy roleplay — pretending your partner is holding a secret over you — how appealing?</li>
+      <li>Protocol training — following strict rules of behaviour with punishments for mistakes — how appealing?</li>
+      <li>Being branded or receiving permanent marks that show ownership — how appealing?</li>
+      <li>Blood play — drawing small amounts of blood as part of the scene — how appealing?</li>
+      <li>Fire play — brief flames or fire-based sensation on the skin (done safely) — how appealing?</li>
+      <li>Extreme spanking hard enough to leave bruises for days — how appealing?</li>
+      <li>Figging — placing peeled ginger root in a sensitive area for a burning sensation — how appealing?</li>
+      <li>Bastinado — striking the soles of the feet with a cane or rod — how appealing?</li>
+      <li>Foot fetish — kissing, massaging, or worshipping feet as part of intimacy — how appealing?</li>
+      <li>High heels or shoes as a specific turn-on (kissing, wearing, worshipping them) — how appealing?</li>
+      <li>Stockings, tights, or pantyhose as a specific turn-on — how appealing?</li>
+      <li>Wearing (or a partner wearing) latex, rubber, or PVC clothing — how appealing?</li>
+      <li>Leather clothing or accessories as a specific turn-on — how appealing?</li>
+      <li>Fur or full furry-suit (&#x27;fursuit&#x27;) play — how appealing?</li>
+      <li>Balloons as a specific turn-on (&#x27;looner&#x27; fetish — inflating, sitting on, popping) — how appealing?</li>
+      <li>Wearing an inflatable suit or balloon suit during play — how appealing?</li>
+      <li>Smoking (watching a partner smoke, or being smoked over) as a turn-on — how appealing?</li>
+      <li>Hair as a specific turn-on — long hair, hair pulling, or hair cutting — how appealing?</li>
+      <li>Armpit worship — kissing, licking, or being close to a partner&#x27;s armpit — how appealing?</li>
+      <li>Sweat or natural body odour as a specific turn-on — how appealing?</li>
+      <li>Spit or saliva play — spitting, drooling, or exchanging saliva during sex — how appealing?</li>
+      <li>Period / menstrual blood involved in intimacy — how appealing?</li>
+      <li>Breast or nipple torture — clamps, biting, or hard pinching on nipples — how appealing?</li>
+      <li>Genital torture / CBT — controlled pain focused on the genitals — how appealing?</li>
+      <li>Sounding — inserting a smooth rod into the urethra for stimulation — how appealing?</li>
+      <li>Extreme anal stretching or anal fisting — how appealing?</li>
+      <li>Double or triple penetration (multiple partners or toys at once) — how appealing?</li>
+      <li>Inserting unusual (safe) objects for stimulation — how appealing?</li>
+      <li>Pregnancy or impregnation as a specific fantasy or turn-on — how appealing?</li>
+      <li>Lactation or breastfeeding as a sexual turn-on — how appealing?</li>
+      <li>Vore — the fantasy of being swallowed whole (or swallowing someone) — how appealing?</li>
+      <li>Giantess / shrinking fantasy — one partner imagined as huge, the other tiny — how appealing?</li>
+      <li>Transformation fetish — imagining yourself or a partner morphing into another form — how appealing?</li>
+      <li>Body inflation fantasy — imagining the body swelling or inflating — how appealing?</li>
+      <li>Muscle worship — a specific attraction to very muscular partners — how appealing?</li>
+      <li>Piercings or tattoos on a partner as a specific turn-on — how appealing?</li>
+      <li>Bald heads or the act of shaving heads as a turn-on — how appealing?</li>
+      <li>Glasses or a &#x27;nerdy&#x27; look as a specific turn-on — how appealing?</li>
+      <li>Uniforms (police, nurse, military, etc.) as a turn-on — how appealing?</li>
+      <li>Cross-dressing or &#x27;sissy&#x27; play — one partner dressing in the clothing of another gender — how appealing?</li>
+      <li>Forced feminization — a partner being playfully made to dress and act feminine — how appealing?</li>
+      <li>Hypnosis or &#x27;mind control&#x27; as a kink (real or roleplayed) — how appealing?</li>
+      <li>Robot, android, or &#x27;dollification&#x27; play — one partner acting mechanical or doll-like — how appealing?</li>
+      <li>Puppet or marionette play — being posed and moved like a puppet — how appealing?</li>
+      <li>Objectification — being treated (playfully) like a piece of furniture or an object — how appealing?</li>
+      <li>Human furniture — literally being used as a table, footstool, or seat — how appealing?</li>
+      <li>Petticoat, French-maid, or maid-uniform fetish — how appealing?</li>
+      <li>Extreme corset or long-term waist training — how appealing?</li>
+      <li>Watersports — urine as part of intimacy (golden showers) — how appealing?</li>
+      <li>Drinking urine as part of watersports — how appealing?</li>
+      <li>Scat play — feces involved in a scene — how appealing?</li>
+      <li>Smearing or tasting feces (the more extreme end of scat play) — how appealing?</li>
+      <li>Vomit as a fetish (emetophilia) — how appealing?</li>
+      <li>Drinking small amounts of blood as part of vampirism-style play — how appealing?</li>
+      <li>Cum play or bukkake — semen as a specific focus of the scene — how appealing?</li>
+      <li>Eating a creampie (semen left inside a partner) — how appealing?</li>
+      <li>Snowballing — kissing while passing semen back and forth — how appealing?</li>
+      <li>Group sex or a gangbang (three or more people at once) — how appealing?</li>
+      <li>Extreme gangbangs involving 10 or more people — how appealing?</li>
+      <li>Double vaginal or double anal penetration — how appealing?</li>
+      <li>Vaginal or anal fisting — how appealing?</li>
+      <li>Prolapse play — showing or playing with a prolapsed opening — how appealing?</li>
+      <li>Tentacle fantasy or monster-shaped dildos — how appealing?</li>
+      <li>Oviposition — the fantasy of eggs being laid inside the body — how appealing?</li>
+      <li>Breeding or impregnation roleplay — playing at &#x27;making babies&#x27; — how appealing?</li>
+      <li>Taboo family / incest roleplay (with adult, consenting partners) — how appealing?</li>
+      <li>Age regression or taboo age roleplay — how appealing?</li>
+      <li>Necrophilia fantasy — one partner playing &#x27;lifeless&#x27; — how appealing?</li>
+      <li>&#x27;Snuff&#x27; or extreme gore fantasy roleplay — how appealing?</li>
+      <li>Cannibalism fantasy (the darkest end of vore) — how appealing?</li>
+      <li>Public sex or exhibitionism — being seen or nearly caught in public — how appealing?</li>
+      <li>Voyeurism — watching other people have sex — how appealing?</li>
+      <li>Glory hole play (anonymous partner through a wall) — how appealing?</li>
+      <li>Fully anonymous sex with a stranger whose face you don&#x27;t see — how appealing?</li>
+      <li>Consensual non-consent (CNC) scenes involving several people at once — how appealing?</li>
+      <li>Kidnapping or abduction fantasy roleplay — how appealing?</li>
+      <li>Interrogation or captured-prisoner torture roleplay — how appealing?</li>
+      <li>Extreme doctor / nurse roleplay involving invasive exams — how appealing?</li>
+      <li>Enema play or colonic irrigation as part of a scene — how appealing?</li>
+      <li>Catheter play — inserting a catheter as part of the scene — how appealing?</li>
+      <li>Diaper / ABDL (Adult Baby, Diaper Lover) fetish — how appealing?</li>
+      <li>Messy food play or &#x27;sploshing&#x27; — being covered in food, cream, cake, etc. — how appealing?</li>
+      <li>Mud, dirt, or &#x27;filth&#x27; play — getting deliberately dirty during sex — how appealing?</li>
+      <li>Licking sweat off a partner as a turn-on — how appealing?</li>
+      <li>Prolonged armpit sniffing as a turn-on — how appealing?</li>
+      <li>Fart fetish (eproctophilia) — how appealing?</li>
+      <li>Burping as a specific fetish — how appealing?</li>
+      <li>Extreme body modification as a fantasy (surgeries, extreme reshaping) — how appealing?</li>
+      <li>Teacher / student roleplay (with adult partners) — how appealing?</li>
+      <li>Boss / secretary roleplay — how appealing?</li>
+      <li>Doctor / patient roleplay with intense exam scenes — how appealing?</li>
+      <li>Priest / sinner or blasphemy-themed roleplay — how appealing?</li>
+      <li>Master / slave &#x27;auction&#x27; roleplay — being &#x27;sold&#x27; or &#x27;bought&#x27; — how appealing?</li>
+      <li>Alien abduction fantasy roleplay — how appealing?</li>
+      <li>Zombie or post-apocalypse survival roleplay — how appealing?</li>
+      <li>Superhero / villain &#x27;captured&#x27; roleplay — how appealing?</li>
+      <li>Historical roleplay — medieval, dungeon, or period-torture themes — how appealing?</li>
+      <li>Sci-fi or cyberpunk themed kink (androids, futuristic gear) — how appealing?</li>
+      <li>Horror-movie monster &#x27;breeding&#x27; roleplay — how appealing?</li>
+      <li>Demon or possession-themed roleplay — how appealing?</li>
+      <li>Ghost, spirit, or paranormal entity roleplay — how appealing?</li>
+      <li>Roleplay as an animal (beyond pet play — full mindset shift) — how appealing?</li>
+      <li>Insect or bug fetish (real or imagined) — how appealing?</li>
+      <li>Fantasy involving plants or tentacle vines — how appealing?</li>
+      <li>Macro / micro play — imagining one partner huge, the other tiny — how appealing?</li>
+      <li>&#x27;Brat taming&#x27; — a cheeky submissive who acts out and is put back in place — how appealing?</li>
+      <li>Being a bratty submissive who gets punished heavily — how appealing?</li>
+      <li>Service-oriented submission — chores, tasks, and rituals of serving a partner — how appealing?</li>
+      <li>Masochism — genuinely enjoying receiving pain (being a &#x27;pain slut&#x27;) — how appealing?</li>
+      <li>Sadism — genuinely enjoying inflicting pain on a partner — how appealing?</li>
+      <li>Being the voyeur cuckold — watching a partner with someone else — how appealing?</li>
+      <li>Being the &#x27;bull&#x27; or hotwife dominant — the third partner in a cuckold dynamic — how appealing?</li>
+      <li>Polyamory or ethical non-monogamy taken to intense levels — how appealing?</li>
+      <li>Swingers parties or full orgies — how appealing?</li>
+      <li>Being a regular at a sex club or BDSM dungeon — how appealing?</li>
+      <li>Livestreaming or recording your kinky play (for yourselves or others) — how appealing?</li>
+      <li>Blackmail / exposure fantasy — the threat of being &#x27;outed&#x27; as a turn-on — how appealing?</li>
+      <li>Identity erasure or &#x27;bimboification&#x27; — losing your normal identity in a scene — how appealing?</li>
+      <li>&#x27;Dumbification&#x27; — playful IQ-reduction / spaced-out roleplay — how appealing?</li>
+      <li>Muscle-growth / &#x27;Hulk&#x27; transformation fantasy — how appealing?</li>
+      <li>Gender-swap or body-swap fantasy — how appealing?</li>
+      <li>Clone or multiple-selves fantasy (sex with copies of yourself) — how appealing?</li>
+      <li>&#x27;Time stop&#x27; or freeze fantasy (one partner posable and still) — how appealing?</li>
+      <li>Extreme &#x27;mind break&#x27; or ahegao — being fucked into blissful mindlessness — how appealing?</li>
+      <li>Overstimulation torture — sensation pushed far past the point of climax — how appealing?</li>
+      <li>Post-orgasm torture — continued stimulation right after climax when it&#x27;s most sensitive — how appealing?</li>
+      <li>Ruined orgasms — climax stopped right as it starts, leaving it unsatisfying — how appealing?</li>
+      <li>Hands-free orgasm training — climaxing without touching yourself — how appealing?</li>
+      <li>ASMR-style erotic triggers — whispers, soft sounds, tingles — how appealing?</li>
+      <li>Voice or accent as a specific turn-on — how appealing?</li>
+      <li>Tickle torture or being helplessly laughing under tickling — how appealing?</li>
+      <li>Electro-stimulation directly on the genitals — how appealing?</li>
+      <li>Being sealed inside a vacuum bed (a full latex vacuum enclosure) — how appealing?</li>
+      <li>Somnophilia — sexual scenes involving one partner pretending to be asleep — how appealing?</li>
+      <li>Somnophilia combined with consensual non-consent themes — how appealing?</li>
+      <li>Vivid non-consent fantasies that show up in your dreams — how appealing?</li>
+      <li>Hypnotic submission — being &#x27;put under&#x27; and given commands — how appealing?</li>
+      <li>&#x27;Drug play&#x27; or substance-enhanced sex (party drugs, alcohol) — how appealing?</li>
+      <li>Alcohol used as a specific element of a scene — how appealing?</li>
+      <li>Extreme endurance sex — sessions that go on for many hours — how appealing?</li>
+      <li>Long-term orgasm denial that lasts weeks or months — how appealing?</li>
+      <li>Permanent chastity as a lifestyle fantasy — how appealing?</li>
+      <li>Castration or &#x27;nullification&#x27; fantasy (imagined, not real) — how appealing?</li>
+      <li>Amputee or disability as a specific fetish — how appealing?</li>
+      <li>Surgical-modification fantasy (imagining bodies being reshaped by surgery) — how appealing?</li>
+      <li>Being turned on by imagining yourself as a different gender (autogynephilia / autoandrophilia) — how appealing?</li>
+      <li>Solo erotic asphyxiation (alone, self-restricted breathing) — how appealing?</li>
+      <li>Partner-controlled asphyxiation (a partner restricts your breathing) — how appealing?</li>
+      <li>Cutting or scarification play — how appealing?</li>
+      <li>Being branded with a heated iron — how appealing?</li>
+      <li>Hook suspension — being hung from flesh hooks (real body-mod play) — how appealing?</li>
+      <li>Extreme stretching of body parts or orifices — how appealing?</li>
+      <li>Prolapse worship (the extreme end of anal stretching) — how appealing?</li>
+      <li>&#x27;Rosebud&#x27; / rosebutt play (deliberate anal prolapse for show) — how appealing?</li>
+      <li>Figging combined with spanking — how appealing?</li>
+      <li>Stinging nettles or similar plants used for sensation — how appealing?</li>
+      <li>The feeling of harmless insects crawling on the skin as sensation play — how appealing?</li>
+      <li>Tarantula or spider fetish (feeling them on the body) — how appealing?</li>
+      <li>Vore fantasies (both &#x27;soft&#x27; harmless swallowing and &#x27;hard&#x27; extreme versions) — how appealing?</li>
+      <li>Unbirthing fantasy — the fantasy of returning inside the womb — how appealing?</li>
+      <li>Cock-transformation fantasy — imagining your genitals changing form — how appealing?</li>
+      <li>Extreme pregnancy-expansion fantasy — bellies pushed far past realistic — how appealing?</li>
+      <li>Body inflation using air, pumping, or similar imagery — how appealing?</li>
+      <li>Sexualized balloon inflation (blowing up or riding balloons) — how appealing?</li>
+      <li>Clown or horror-clown themed kink — how appealing?</li>
+      <li>Wearing (or a partner wearing) a full gimp mask / total-enclosure suit — how appealing?</li>
+      <li>Heavy rubber or full total-enclosure rubber suits — how appealing?</li>
+      <li>Apocalypse / end-of-the-world orgy fantasy — how appealing?</li>
+    </ol>
+
+<script src="script.js"></script>
+</body>
+</html>
